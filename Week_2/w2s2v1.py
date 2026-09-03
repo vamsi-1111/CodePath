@@ -112,3 +112,70 @@ print(prioritize_observations(observed_species2, priority_species2))
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
+def distinct_averages(species_populations):
+    my_dict = {}
+    while species_populations:
+      max_value = max(species_populations)
+      min_value = min(species_populations)
+      species_populations.remove(max_value)
+      species_populations.remove(min_value)
+      average = (max_value + min_value) / (2)
+      my_dict[average] = my_dict.get(average, 0) + 1
+
+    return len(my_dict)
+
+
+species_populations1 = [4,1,4,0,3,5]
+species_populations2 = [1,100]
+
+print(distinct_averages(species_populations1))
+print(distinct_averages(species_populations2)) 
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+def max_species_copies(raised_species, target_species):
+    my_dict = {}
+    res = []
+    for species in raised_species:
+        my_dict[species] = my_dict.get(species, 0) + 1
+    for species in target_species:
+        if species in my_dict:
+            value = my_dict.get(species)
+            res.append(value)
+
+    return min(res)
+
+raised_species1 = "abcba"
+target_species1 = "abc"
+print(max_species_copies(raised_species1, target_species1))  # Output: 1
+
+raised_species2 = "aaaaabbbbcc"
+target_species2 = "abc"
+print(max_species_copies(raised_species2, target_species2)) # Output: 2
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+def count_unique_species(ecosystem_data):
+    ptr = 0
+    ptr2 = 0
+    my_set = set()
+
+    while ptr < len(ecosystem_data):
+        if ecosystem_data[ptr2].isdigit():
+            num = []
+            while ptr2 < len(ecosystem_data) and ecosystem_data[ptr2].isdigit():
+                num.append(ecosystem_data[ptr2])
+                ptr2 = ptr2 + 1
+            ptr = ptr2
+            my_set.add(int("".join(num)))
+        else:
+            ptr = ptr + 1
+            ptr2 = ptr
+
+    return len(my_set)
+
+ecosystem_data1 = "f123de34g8hi34"
+ecosystem_data2 = "species1234forest234"
+ecosystem_data3 = "x1y01z001"
+
+print(count_unique_species(ecosystem_data1))
+print(count_unique_species(ecosystem_data2))
+print(count_unique_species(ecosystem_data3))
