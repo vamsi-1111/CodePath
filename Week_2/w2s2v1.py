@@ -132,6 +132,7 @@ print(distinct_averages(species_populations1))
 print(distinct_averages(species_populations2)) 
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
 def max_species_copies(raised_species, target_species):
     my_dict = {}
     res = []
@@ -153,22 +154,21 @@ target_species2 = "abc"
 print(max_species_copies(raised_species2, target_species2)) # Output: 2
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
 def count_unique_species(ecosystem_data):
     ptr = 0
     ptr2 = 0
     my_set = set()
 
     while ptr < len(ecosystem_data):
-        if ecosystem_data[ptr2].isdigit():
+        if ecosystem_data[ptr].isdigit():
             num = []
-            while ptr2 < len(ecosystem_data) and ecosystem_data[ptr2].isdigit():
-                num.append(ecosystem_data[ptr2])
-                ptr2 = ptr2 + 1
-            ptr = ptr2
+            while ptr < len(ecosystem_data) and ecosystem_data[ptr].isdigit():
+                num.append(ecosystem_data[ptr])
+                ptr = ptr + 1
             my_set.add(int("".join(num)))
         else:
             ptr = ptr + 1
-            ptr2 = ptr
 
     return len(my_set)
 
@@ -179,3 +179,124 @@ ecosystem_data3 = "x1y01z001"
 print(count_unique_species(ecosystem_data1))
 print(count_unique_species(ecosystem_data2))
 print(count_unique_species(ecosystem_data3))
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+def num_equiv_species_pairs(species_pairs):
+    my_dict = {}
+    duplicates = 0
+    for pair in species_pairs:
+        my_dict[tuple(sorted(pair))] = my_dict.get(tuple(sorted(pair)), 0) + 1
+
+    for value in my_dict.values():
+        if value != 1:
+            val = value * (value - 1) // 2
+            duplicates = duplicates + val
+
+    return duplicates
+
+species_pairs1 = [[1,2],[2,1],[3,4],[5,6]]
+species_pairs2 = [[1,2],[1,2],[1,1],[1,2],[2,2]]
+
+print(num_equiv_species_pairs(species_pairs1))
+print(num_equiv_species_pairs(species_pairs2))
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+def remove_low_rated_destinations(destinations, rating_threshold):
+    my_dict = {}
+    for key, value in destinations.items():
+        if value > rating_threshold:
+            my_dict[key] = value
+
+    return my_dict
+
+destinations = {"Paris": 4.8, "Berlin": 3.5, "Addis Ababa": 4.9, "Moscow": 2.8}
+destinations2 = {"Bogotá": 4.8, "Kansas City": 3.9, "Tokyo": 4.5, "Sydney": 3.0}
+
+print(remove_low_rated_destinations(destinations, 4.0))
+print(remove_low_rated_destinations(destinations2, 4.9))
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+def unique_souvenir_counts(souvenirs):
+    my_dict = {}
+    my_set = set()
+    for souvenir in souvenirs:
+        my_dict[souvenir] = my_dict.get(souvenir, 0) + 1
+
+    for key, values in my_dict.items():
+        if values in my_set:
+            return False
+        else:
+            my_set.add(values)
+
+    return True
+
+souvenirs1 = ["keychain", "hat", "hat", "keychain", "keychain", "postcard"]
+souvenirs2 = ["postcard", "postcard", "postcard", "postcard"]
+souvenirs3 = ["keychain", "magnet", "hat", "candy", "postcard", "stuffed bear"]
+
+print(unique_souvenir_counts(souvenirs1))  
+print(unique_souvenir_counts(souvenirs2)) 
+print(unique_souvenir_counts(souvenirs3))
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+def decode_message(key, message):
+    my_dict = {}
+    letter = 'a'
+    string = ""
+    for char in key:
+        if char == " ":
+            if char not in my_dict:
+                my_dict[char] = " "
+            else:
+                continue
+        else:
+            if char not in my_dict:     
+                my_dict[char] = letter
+                letter = chr(ord(letter) + 1)
+            else:
+                continue
+
+    for char in message:
+        if char in my_dict:
+            string = string + my_dict.get(char)
+
+
+    return string
+    
+key1 = "the quick brown fox jumps over the lazy dog"
+message1 = "vkbs bs t suepuv"
+
+print(decode_message(key1, message1))
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+def find_longest_harmonious_travel_sequence(ratings):
+    # Initialize a dictionary to store the frequency of each rating
+    frequency = {}
+
+    # Count the occurrences of each rating
+    for rating in ratings:
+        frequency[rating] = frequency.get(rating, 0) + 1
+
+    max_length = 0
+
+    # Find the longest harmonious sequence
+    for rating in frequency:
+        if rating + 1 in frequency:
+            max_length = max(max_length, 
+                        frequency[rating] + frequency[rating + 1])  
+
+    return max_length
+
+ratings1 = [1, 3, 2, 2, 5, 2, 3, 7]
+ratings2 = [1, 2, 3, 4]
+ratings3 = [1, 1, 1, 1]
+
+print(find_longest_harmonious_travel_sequence(ratings1))  # 5
+print(find_longest_harmonious_travel_sequence(ratings2))  # 2
+print(find_longest_harmonious_travel_sequence(ratings3))  # 0
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
