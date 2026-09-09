@@ -300,3 +300,69 @@ print(find_longest_harmonious_travel_sequence(ratings2))  # 2
 print(find_longest_harmonious_travel_sequence(ratings3))  # 0
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+def is_route_covered(trips, start_dest, end_dest):
+    my_dict = {}
+    for arr in trips:
+        start_value = arr[0]
+        end_value = arr[-1]
+        while start_value <= end_value:
+            my_dict[start_value] = my_dict.get(start_value, 0) + 1
+            start_value = start_value + 1
+
+    if start_dest > end_dest:
+        return False
+
+    while start_dest <= end_dest:
+        if start_dest in my_dict:
+            start_dest = start_dest + 1
+        else:
+            return False
+
+    return True
+
+trips1 = [[1, 2], [3, 4], [5, 6]]
+start_dest1, end_dest1 = 2, 5
+
+trips2 = [[1, 10], [10, 20]]
+start_dest2, end_dest2 = 21, 21
+
+trips3 = [[1, 2], [3, 5]]
+start_dest3, end_dest3 = 2, 5
+
+print(is_route_covered(trips1, start_dest1, end_dest1))
+print(is_route_covered(trips2, start_dest2, end_dest2))
+print(is_route_covered(trips3, start_dest3, end_dest3))
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+def most_popular_even_destination(destinations):
+    my_dict = {}
+    val = 0
+    res = float("inf")
+    for destination in destinations:
+        my_dict[destination] = my_dict.get(destination, 0) + 1
+
+    for key, value in my_dict.items():
+        if value >= val and key % 2 == 0:
+            if value == val:
+                res = min(res, key)
+            elif value > val:
+                res = key
+                val = value
+
+    if res == float("inf"):
+        return -1
+
+    if my_dict.get(res) == 0:
+        return -1
+
+    return res 
+
+destinations1 = [0, 1, 2, 2, 4, 4, 1]
+destinations2 = [4, 4, 4, 9, 2, 4]
+destinations3 = [29, 47, 21, 41, 13, 37, 25, 7]
+
+print(most_popular_even_destination(destinations1))
+print(most_popular_even_destination(destinations2))
+print(most_popular_even_destination(destinations3))
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
